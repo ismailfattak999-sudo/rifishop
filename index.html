@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ريفي - Rifishop</title>
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --primary-color: #58a6ff;
+            --whatsapp-color: #25d366;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 22px; margin-bottom: 5px; }
+        p.bio { color: #8b949e; margin-bottom: 25px; font-size: 14px; }
+
+        .links-container { width: 100%; }
+
+        .link-card {
+            background-color: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .link-card:hover { transform: scale(1.02); background: #21262d; }
+
+        .link-card i { font-size: 24px; }
+        .link-text { flex-grow: 1; text-align: center; font-weight: bold; }
+
+        .footer { margin-top: 40px; color: #8b949e; font-size: 12px; }
+
+        /* كود النافذة المنبثقة POPUP */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); display: none; 
+            justify-content: center; align-items: center; z-index: 10000;
+        }
+        .popup-content {
+            background: #1c2128; padding: 30px; border-radius: 20px;
+            width: 85%; max-width: 320px; text-align: center;
+            border: 1px solid var(--primary-color); position: relative;
+        }
+        .close-btn { position: absolute; top: 10px; left: 10px; color: white; background: none; border: none; font-size: 20px; cursor: pointer; }
+        .popup-icon { font-size: 40px; color: var(--whatsapp-color); margin-bottom: 15px; }
+        .popup-btn {
+            display: block; background: var(--whatsapp-color); color: white;
+            text-decoration: none; padding: 12px; border-radius: 10px;
+            margin-top: 20px; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- الصورة (تقدر تبدلها برابط صورتك) -->
+        <img src="https://via.placeholder.com/100" alt="Logo" class="profile-img">
+        
+        <h1>متجر ريفي</h1>
+        <p class="bio">أفضل الخدمات الرقمية والحسابات المضمونة</p>
+
+        <div class="links-container">
+            <!-- رابط واتساب -->
+            <a href="https://wa.me/رقمك_هنا" class="link-card">
+                <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+                <span class="link-text">واتساب المبيعات</span>
+                <span></span>
+            </a>
+
+            <!-- رابط قناة الواتساب -->
+            <a href="https://whatsapp.com/channel/0029VbCifNwGOj9onMMOOR3X" class="link-card">
+                <i class="fas fa-bullhorn" style="color: #ff9800;"></i>
+                <span class="link-text">قناة العروض</span>
+                <span></span>
+            </a>
+
+            <!-- رابط تيليجرام -->
+            <a href="#" class="link-card">
+                <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                <span class="link-text">تيليجرام</span>
+                <span></span>
+            </a>
+        </div>
+
+        <div class="footer">
+            rifishop.com © 2024
+        </div>
+    </div>
+
+    <!-- النافذة المنبثقة -->
+    <div id="welcome-popup" class="popup-overlay">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <i class="fas fa-check-circle popup-icon"></i>
+            <h2>أهلاً بك في متجر ريفي</h2>
+            <p style="font-size: 14px; color: #adbac7;">انضم لقناتنا لتصلك أحدث الحسابات والأسعار الحصرية</p>
+            <a href="https://whatsapp.com/channel/0029VbCifNwGOj9onMMOOR3X" class="popup-btn">انضم للقناة الآن</a>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('welcome-popup').style.display = 'flex';
+            }, 1500);
+        };
+        function closePopup() {
+            document.getElementById('welcome-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
