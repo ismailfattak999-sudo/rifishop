@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ريفي - Rifishop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0e14;
+            --card-bg: linear-gradient(145deg, #1e222d, #14171e);
+            --accent-blue: #00d2ff;
+            --text-gray: #b1b1b1;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        /* قسم الصورة التجريبية الجديدة */
+        .test-banner {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        .test-banner img {
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+        }
+
+        .marquee {
+            background: #161b22;
+            padding: 10px 0;
+            border-bottom: 1px solid #30363d;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee p {
+            display: inline-block;
+            animation: marqueeAnim 15s linear infinite;
+            margin: 0;
+            color: var(--text-gray);
+        }
+        @keyframes marqueeAnim {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .links-section { padding: 20px; }
+        .dropdown-container {
+            background: var(--card-bg);
+            border: 1px solid #2d333b;
+            border-radius: 15px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .link-header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #30363d;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .footer-credits { text-align: center; padding: 20px; color: var(--text-gray); font-size: 13px; }
+    </style>
+</head>
+<body>
+
+    <!-- صورة تجريبية خارجية (من سيرفرات موثوقة) -->
+    <div class="test-banner">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Test Image">
+    </div>
+
+    <div class="marquee">
+        <p>| متجر ريفي التجريبي | إذا ظهرت هذه الصورة فالمشكلة في الروابط السابقة |</p>
+    </div>
+
+    <div class="links-section">
+        <div class="dropdown-container">
+            <div class="link-header" onclick="toggleD(this)">
+                <span>الواتساب الرسمي</span>
+                <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="https://wa.me/212780938731" style="color: white; text-decoration: none; font-weight: bold;">اضغط هنا للمراسلة</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-credits">
+        RIFI SHOP &copy; 2026
+    </div>
+
+    <script>
+        function toggleD(e) {
+            var c = e.nextElementSibling;
+            c.style.display = (c.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
