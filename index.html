@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ريفي - Rifishop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0e14;
+            --card-bg: linear-gradient(145deg, #1e222d, #14171e);
+            --accent-blue: #00d2ff;
+            --text-gray: #b1b1b1;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+
+        /* سلايدر الصور الثلاث المتحركة */
+        .rifi-slider-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            background-color: #000;
+        }
+
+        .rifi-slider-track {
+            display: flex;
+            width: 300%; /* تلاتة د الصور */
+            height: 100%;
+            animation: slideRifi 12s infinite ease-in-out;
+        }
+
+        .rifi-slider-track img {
+            width: 33.333%;
+            height: 100%;
+            object-fit: contain; /* باش الصورة تبان كاملة ومتقاداش */
+            background-color: var(--bg-dark);
+        }
+
+        @keyframes slideRifi {
+            0%, 25% { transform: translateX(0); }
+            33%, 58% { transform: translateX(33.333%); }
+            66%, 91% { transform: translateX(66.666%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* الشريط المتحرك */
+        .marquee {
+            background: #161b22;
+            padding: 10px 0;
+            border-bottom: 1px solid #30363d;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee p {
+            display: inline-block;
+            animation: marqueeAnim 15s linear infinite;
+            margin: 0;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        @keyframes marqueeAnim {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* الأزرار والقوائم المنسدلة */
+        .links-section { padding: 15px; }
+        .dropdown-container {
+            background: var(--card-bg);
+            border: 1px solid #2d333b;
+            border-radius: 15px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .link-header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            color: white;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 0 20px 20px;
+            text-align: center;
+            border-top: 1px solid #30363d;
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* خدماتنا الحصرية */
+        .services-container {
+            margin: 15px;
+            padding: 20px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 25px;
+            background: rgba(0, 210, 255, 0.05);
+        }
+        .services-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+        }
+        .service-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px dashed #30363d;
+        }
+
+        .footer-credits { text-align: center; padding: 20px; font-size: 13px; color: var(--text-gray); }
+        .footer-credits span { color: var(--accent-blue); font-weight: bold; }
+
+        /* النافذة المنبثقة */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .popup-content { background: #1c2128; padding: 25px; border-radius: 20px; text-align: center; width: 80%; border: 1px solid var(--accent-blue); }
+    </style>
+</head>
+<body>
+
+    <!-- سلايدر الصور الثلاث من ملفاتك مباشرة -->
+    <div class="rifi-slider-container">
+        <div class="rifi-slider-track">
+            <img src="IMG_0768.jpeg" alt="خدمة 1">
+            <img src="IMG_0769.jpeg" alt="خدمة 2">
+            <img src="IMG_0770.jpeg" alt="خدمة 3">
+        </div>
+    </div>
+
+    <div class="marquee">
+        <p>| أهلاً بكم في متجر ريفي | شحن جواهر فري فاير | بيع حسابات مضمونة | أفضل الأسعار |</p>
+    </div>
+
+    <div class="links-section">
+        
+        <div class="dropdown-container">
+            <div class="link-header" onclick="toggleD(this)">
+                <span style="font-weight: bold;">WhatsApp</span>
+                <i class="fab fa-whatsapp" style="color: #25d366; font-size: 24px;"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="https://wa.me/212780938731" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-weight: bold;">Start Chat</a>
+            </div>
+        </div>
+
+        <div class="dropdown-container">
+            <div class="link-header" onclick="toggleD(this)">
+                <span style="font-weight: bold;">Channel WhatsApp</span>
+                <i class="fas fa-bullhorn" style="color: #25d366; font-size: 24px;"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="https://whatsapp.com/channel/0029VbCifNwGOj9onMMOOR3X" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-weight: bold;">Join Now</a>
+            </div>
+        </div>
+
+        <div class="dropdown-container">
+            <div class="link-header" onclick="toggleD(this)">
+                <span style="font-weight: bold;">Instagram</span>
+                <i class="fab fa-instagram" style="color: #e4405f; font-size: 24px;"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="https://www.instagram.com/rifi.shop1" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-weight: bold;">Follow</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="services-container">
+        <div class="services-header">
+            <h3>خدماتنا الحصرية</h3>
+            <i class="fas fa-crown"></i>
+        </div>
+        <div class="service-row"><span>حسابات فري فاير 🔥</span><i class="fas fa-exchange-alt"></i></div>
+        <div class="service-row"><span>شحن جواهر 💎</span><i class="fas fa-coins"></i></div>
+        <div class="service-row"><span>وساطة مضمونة 🤝</span><i class="fas fa-handshake"></i></div>
+    </div>
+
+    <div class="footer-credits">
+        جميع الحقوق محفوظة لـ <span>RIFI SHOP</span> &copy; 2026
+    </div>
+
+    <div id="welcome-popup" class="popup-overlay">
+        <div class="popup-content">
+            <h3 style="color: var(--accent-blue);">أهلاً بك في متجر ريفي</h3>
+            <p>انضم لقناتنا لتصلك أحدث العروض</p>
+            <a href="https://whatsapp.com/channel/0029VbCifNwGOj9onMMOOR3X" style="background: #25d366; color: white; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: inline-block;">انضم الآن</a>
+            <button onclick="closeP()" style="display:block; margin: 15px auto; background:none; border:none; color:gray;">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleD(e) {
+            var c = e.nextElementSibling;
+            c.style.display = (c.style.display === 'block') ? 'none' : 'block';
+        }
+        window.onload = function() {
+            setTimeout(() => { document.getElementById('welcome-popup').style.display = 'flex'; }, 2000);
+        };
+        function closeP() { document.getElementById('welcome-popup').style.display = 'none'; }
+    </script>
+</body>
+</html>
