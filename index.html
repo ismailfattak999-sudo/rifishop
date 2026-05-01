@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ريفي - Rifishop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0e14;
+            --card-bg: linear-gradient(145deg, #1e222d, #14171e);
+            --accent-blue: #00d2ff;
+            --accent-purple: #9d50bb;
+            --text-gray: #b1b1b1;
+            --danger-red: #ff4b2b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+        }
+
+        /* 1. الصور المتحركة (Slider) */
+        .slider {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: slideAnim 15s infinite;
+        }
+        .slides img { width: 100%; height: 100%; object-fit: cover; }
+        
+        @keyframes slideAnim {
+            0% { transform: translateX(0); }
+            33% { transform: translateX(100%); }
+            66% { transform: translateX(200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* 2. الكتابة المتحركة (Marquee) */
+        .marquee {
+            background: #161b22;
+            padding: 10px 0;
+            border-bottom: 1px solid #30363d;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee p {
+            display: inline-block;
+            animation: marqueeAnim 15s linear infinite;
+            margin: 0;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        @keyframes marqueeAnim {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* 3. الأزرار (Social Links) */
+        .links-section { padding: 20px; }
+        .link-item {
+            background: var(--card-bg);
+            border: 1px solid #2d333b;
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .link-item i { font-size: 24px; }
+
+        /* 4. قسم خدماتنا الحصرية */
+        .services-container {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 25px;
+            background: rgba(0, 210, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
+        }
+        .services-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            text-shadow: 0 0 10px var(--accent-blue);
+        }
+        .service-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px dashed #30363d;
+        }
+        .service-row.warning { color: #ffcc00; }
+        .service-row.danger { color: var(--danger-red); border-bottom: none; }
+        .service-row i { font-size: 18px; }
+
+        /* سطر متقطع وإحصائيات الثقة */
+        .divider {
+            border-top: 1px dashed var(--accent-blue);
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+        .trust-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        .stat-item i { color: var(--accent-blue); }
+
+        /* الحقوق */
+        .footer-credits {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: var(--text-gray);
+            border-top: 1px solid #1c2128;
+            margin-top: 10px;
+        }
+        .footer-credits span { color: var(--accent-blue); font-weight: bold; }
+
+        /* النافذة المنبثقة */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .popup-content { background: #1c2128; padding: 25px; border-radius: 20px; text-align: center; width: 80%; border: 1px solid var(--accent-blue); }
+    </style>
+</head>
+<body>
+
+    <!-- 1. الصور المتحركة -->
+    <div class="slider">
+        <div class="slides">
+            <img src="https://via.placeholder.com/800x400/161b22/00d2ff?text=Slide+1" alt="Slide 1">
+            <img src="https://via.placeholder.com/800x400/161b22/9d50bb?text=Slide+2" alt="Slide 2">
+            <img src="https://via.placeholder.com/800x400/161b22/25d366?text=Slide+3" alt="Slide 3">
+        </div>
+    </div>
+
+    <!-- 2. الشريط المتحرك -->
+    <div class="marquee">
+        <p>| أهلاً بكم في متجر ريفي | أفضل الخدمات الرقمية بأقل الأسعار | سرعة وأمان وضمان |</p>
+    </div>
+
+    <!-- 3. الأزرار -->
+    <div class="links-section">
+       <div class="dropdown-container" style="background: linear-gradient(145deg, #1e222d, #14171e); border: 1px solid #2d333b; border-radius: 15px; margin-bottom: 12px; overflow: hidden; font-family: sans-serif; direction: rtl;">
+    
+    <div class="link-header" onclick="var content = this.nextElementSibling; content.style.display = (content.style.display === 'block') ? 'none' : 'block';" style="padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: white;">
+        <span style="font-weight: bold;">WhatsApp</span>
+        <i class="fab fa-whatsapp" style="color: #25d366; font-size: 24px;"></i>
+    </div>
+
+    <div class="dropdown-content" style="display: none; padding: 0 20px 20px; text-align: center; border-top: 1px solid #30363d; background: rgba(0,0,0,0.2);">
+        <p style="font-size: 14px; color: #b1b1b1; margin: 15px 0; line-height: 1.6;">
+            رقم الواتساب الأصلي والوحيد يبدأ بـ 78 وينتهي بـ 31 للتواصل المباشر أو طلب الخدمات ولا تنسى تسجيل رقمي.
+        </p>
+        <a href="https://wa.me/212780938731" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-size: 14px; border: 1px solid #444; font-weight: bold;">
+            Start Chat
+        </a>
+    </div>
+</div>
+
+        <!-- بداية فقرة قناة الواتساب المنسدلة -->
+<div class="dropdown-container" style="background: linear-gradient(145deg, #1e222d, #14171e); border: 1px solid #2d333b; border-radius: 15px; margin-bottom: 12px; overflow: hidden; font-family: sans-serif; direction: rtl;">
+    
+    <!-- رأس القائمة -->
+    <div class="link-header" onclick="var content = this.nextElementSibling; content.style.display = (content.style.display === 'block') ? 'none' : 'block';" style="padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: white;">
+        <span style="font-weight: bold;">Channel WhatsApp</span>
+        <i class="fas fa-bullhorn" style="color: #25d366; font-size: 24px;"></i>
+    </div>
+
+    <!-- محتوى القائمة -->
+    <div class="dropdown-content" style="display: none; padding: 0 20px 20px; text-align: center; border-top: 1px solid #30363d; background: rgba(0,0,0,0.2);">
+        <p style="font-size: 14px; color: #b1b1b1; margin: 15px 0; line-height: 1.6;">
+            القناة مخصصة لنشر دلائل الثقة. يظهر فيها معاملات آخر كل شهر للناس الذين لا يملكون حساباً في تلغرام. الرابط أسفله.
+        </p>
+        <!-- الزر الخاص بالرابط -->
+        <a href="https://whatsapp.com/channel/0029VbCifNwGOj9onMMOOR3X" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-size: 14px; border: 1px solid #444; font-weight: bold;">
+            Join Channel
+        </a>
+    </div>
+</div>
+<!-- نهاية فقرة قناة الواتساب -->
+
+        <!-- الإضافات الجديدة -->
+   <!-- بداية فقرة فيسبوك المنسدلة -->
+<div class="dropdown-container" style="background: linear-gradient(145deg, #1e222d, #14171e); border: 1px solid #2d333b; border-radius: 15px; margin-bottom: 12px; overflow: hidden; font-family: sans-serif; direction: rtl;">
+    
+    <!-- رأس القائمة -->
+    <div class="link-header" onclick="var content = this.nextElementSibling; content.style.display = (content.style.display === 'block') ? 'none' : 'block';" style="padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: white;">
+        <span style="font-weight: bold;">Facebook</span>
+        <i class="fab fa-facebook" style="color: #1877f2; font-size: 24px;"></i>
+    </div>
+
+    <!-- محتوى القائمة -->
+    <div class="dropdown-content" style="display: none; padding: 0 20px 20px; text-align: center; border-top: 1px solid #30363d; background: rgba(0,0,0,0.2);">
+        <p style="font-size: 14px; color: #b1b1b1; margin: 15px 0; line-height: 1.6;">
+            صفحة الفيس الوحيدة أنشر فيها الحسابات وعروض الشحن، الرابط أسفله. حذاري من المنتحلين.
+        </p>
+        <!-- الزر الخاص بالرابط -->
+        <a href="https://www.facebook.com/share/1BKVGcYo1w/?mibextid=wwXIfr" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-size: 14px; border: 1px solid #444; font-weight: bold;">
+            Visit Page
+        </a>
+    </div>
+</div>
+<!-- نهاية فقرة فيسبوك -->
+
+        <!-- بداية فقرة إنستغرام المنسدلة -->
+<div class="dropdown-container" style="background: linear-gradient(145deg, #1e222d, #14171e); border: 1px solid #2d333b; border-radius: 15px; margin-bottom: 12px; overflow: hidden; font-family: sans-serif; direction: rtl;">
+    
+    <!-- هذا هو رأس القائمة الذي يحل محل السطر القديم -->
+    <div class="link-header" onclick="var content = this.nextElementSibling; content.style.display = (content.style.display === 'block') ? 'none' : 'block';" style="padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: white;">
+        <span style="font-weight: bold;">Instagram</span>
+        <i class="fab fa-instagram" style="color: #e4405f; font-size: 24px;"></i>
+    </div>
+
+    <!-- هذا هو الجزء الذي يظهر فيه النص والزر عند الضغط -->
+    <div class="dropdown-content" style="display: none; padding: 0 20px 20px; text-align: center; border-top: 1px solid #30363d; background: rgba(0,0,0,0.2);">
+        <p style="font-size: 14px; color: #b1b1b1; margin: 15px 0; line-height: 1.6;">
+            صفحة الأنستغرام الوحيدة @rifi.shop1 لعرض الجديد والتواصل. تابعنا عبر الرابط أسفله.
+        </p>
+        <!-- هذا هو الزر الذي يحتوي على الرابط -->
+        <a href="https://www.instagram.com/rifi.shop1?igsh=MWZxb3Iwa3YzY245dQ%3D%3D&utm_source=qr" style="display: inline-block; background: #333; color: white; text-decoration: none; padding: 8px 30px; border-radius: 20px; font-size: 14px; border: 1px solid #444; font-weight: bold;">
+            Follow Us
+        </a>
+    </div>
+</div>
+<!-- نهاية فقرة إنستغرام -->
+
+        <a href="mailto:yourname@gmail.com" class="link-item">
+            <span>Gmail</span>
+            <i class="fas fa-envelope" style="color: #ea4335;"></i>
+        </a>
+    </div>
+
+    <!-- 4. قسم خدماتنا الحصرية -->
+    <div class="services-container">
+        <div class="services-header">
+            <i class="fas fa-gamepad"></i>
+            <h2>خدماتنا الحصرية</h2>
+            <i class="fas fa-crown"></i>
+        </div>
+        
+        <div class="service-row">
+            <span>بيع وشراء حسابات فري فاير 🔥</span>
+            <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="service-row">
+            <span>شحن جواهر بأقل الأسعار 💎</span>
+            <i class="fas fa-coins"></i>
+        </div>
+        <div class="service-row">
+            <span>بيع جيغات انوي 🟣</span>
+            <i class="fas fa-wifi"></i>
+        </div>
+        <div class="service-row">
+            <span>بيع اكواد فري فاير 🎫</span>
+            <i class="fas fa-ticket-alt"></i>
+        </div>
+        <div class="service-row">
+            <span>خدمة وساطة بين البائع والمشتري 🤝</span>
+            <i class="fas fa-handshake"></i>
+        </div>
+        <div class="service-row">
+            <span>كشف بريد الاستعادة وإلغاء الروابط ⚙️</span>
+            <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="service-row warning">
+            <span>لا نوفر شحن تطبيقات المراهنة ❌</span>
+            <i class="fas fa-ban"></i>
+        </div>
+        <div class="service-row danger">
+            <span>لا نقبل الدفع عن طريق الطرف الثالث 🚫</span>
+            <i class="fas fa-user-times"></i>
+        </div>
+
+        <div class="divider"></div>
+        <div class="trust-stats">
+            <div class="stat-item"><i class="fas fa-bolt"></i> سرعة فائقة في التنفيذ</div>
+            <div class="stat-item"><i class="fas fa-clock"></i> دعم 24/24</div>
+            <div class="stat-item"><i class="fas fa-shield-check"></i> ثقة موثوقة</div>
+        </div>
+    </div>
+
+    <!-- حقوق الملكية -->
+    <div class="footer-credits">
+        جميع الحقوق محفوظة من قبل <span>R I F I &nbsp; S H O P</span> <i class="far fa-copyright"></i>
+    </div>
+
+    <!-- النافذة المنبثقة -->
+    <div id="welcome-popup" class="popup-overlay">
+        <div class="popup-content">
+            <h3 style="color: var(--accent-blue);">أهلاً بك في متجر ريفي</h3>
+            <p>انضم لقناتنا لتصلك أحدث العروض</p>
+            <a href="https://whatsapp.com/channel/0029VbCifNwGOj9onMMOOR3X" style="background: #25d366; color: white; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: inline-block; margin-top: 10px;">انضم الآن</a>
+            <button onclick="closePopup()" style="display:block; margin: 15px auto; background:none; border:none; color:gray;">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(() => { document.getElementById('welcome-popup').style.display = 'flex'; }, 2000);
+        };
+        function closePopup() { document.getElementById('welcome-popup').style.display = 'none'; }
+    </script>
+</body>
+<!-- ============================================= -->
+<!-- بداية كود الشريط العلوي المطور (Rifi Shop Header) -->
+<!-- ============================================= -->
+
+<!-- المكتبات المطلوبة ( FontAwesome للأيقونات) -->
+<!-- إذا كانت لديك هذه المكتبة مسبقاً في موقعك، فلا تكررها -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    /* 1. المتغيرات الأساسية للوضع الداكن والفاتح */
+    :root {
+        --header-bg: #1e222d; /* لون الشريط الأساسي */
+        --text-color: #ffffff;
+        --menu-bg: #2d333b;
+        --icon-light-color: #ffd700;
+        --icon-dark-color: #aaaaaa;
+        --verified-color: #00d2ff;
+    }
+
+    /* كلاس خاص لتفعيل الوضع الفاتح عبر الجافاسكريبت */
+    body.light-mode {
+        --header-bg: #f5f5f5;
+        --text-color: #333333;
+        --menu-bg: #ffffff;
+    }
+
+    /* 2. تصميم الشريط العلوي الأساسي */
+    .top-header-rifi {
+        position: fixed; /* يبقى ثابتاً عند التمرير */
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        direction: rtl; /* اتجاه عربي */
+        z-index: 10000; /* يظهر فوق كل شيء */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        transition: background 0.3s ease;
+    }
+
+    /* 3. الجزء الأيمن (العلامة الزرقاء والكتابة) */
+    .header-right-rifi {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    /* تصميم وعملية النبض للعلامة الزرقاء */
+    .verified-badge-rifi {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: white;
+        border-radius: 50%;
+        color: var(--verified-color);
+        font-size: 18px;
+        animation: pulse-verified 2s infinite;
+    }
+
+    @keyframes pulse-verified {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+        70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    /* الخط الفاصل العمودي */
+    .vertical-separator {
+        width: 2px;
+        height: 22px;
+        background-color: var(--text-color);
+        opacity: 0.5;
+    }
+
+    /* تصميم وعملية النبض للكتابة */
+    .text-container-rifi {
+        position: relative;
+        overflow: hidden;
+        height: 25px; /* طول الحاوية */
+        display: flex;
+        align-items: center;
+    }
+
+    .moving-text-rifi {
+        color: var(--text-color);
+        font-weight: bold;
+        font-size: 14px;
+        position: absolute;
+        white-space: nowrap;
+        animation: slide-glow-text 3s infinite ease-in-out;
+    }
+
+    /* تأثير النبض والحركة لليمين واليسار */
+    @keyframes slide-glow-text {
+        0%, 100% { opacity: 0.7; transform: translateX(0); text-shadow: 0 0 0px var(--text-color); }
+        50% { opacity: 1; transform: translateX(-5px); text-shadow: 0 0 8px var(--text-color); }
+    }
+
+    /* 4. الجزء الأيسر (القائمة الجانبية Burger Menu) */
+    .menu-icon-rifi {
+        color: var(--text-color);
+        font-size: 22px;
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 10px; /* هامش بسيط للأيسر */
+    }
+
+    /* 5. تصميم القائمة الجانبية التي تفتح */
+    .side-menu-rifi {
+        position: fixed;
+        top: 0;
+        left: -250px; /* مخفية لليسار */
+        width: 250px;
+        height: 100%;
+        background-color: var(--menu-bg);
+        z-index: 9999;
+        padding: 70px 20px 20px; /* مسافة للأسفل */
+        transition: left 0.3s ease;
+        direction: rtl;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+
+    .side-menu-rifi.open {
+        left: 0; /* تفتح عند إضافة كلاس */
+    }
+
+    /* زر التبديل بين الوضع الليلي والنهاري داخل القائمة */
+    .theme-switch-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--text-color);
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(128,128,128,0.2);
+    }
+
+    .theme-icons {
+        display: flex;
+        gap: 10px;
+        font-size: 18px;
+    }
+
+    .fa-sun { color: var(--icon-light-color); }
+    .fa-moon { color: var(--icon-dark-color); }
+
+    /* مفتاح التبديل Switch */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px; width: 18px;
+        left: 3px; bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider { background-color: #2196F3; }
+    input:checked + .slider:before { transform: translateX(26px); }
+
+    /* الخلفية المعتمة عند فتح القائمة */
+    .overlay-rifi {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 9998;
+        display: none; /* مخفية */
+    }
+
+    .overlay-rifi.open { display: block; }
+</style>
+
+<!-- هيكل الـ HTML -->
+<div class="top-header-rifi">
+    <div class="header-right-rifi">
+        <!-- العلامة الزرقاء -->
+        <div class="verified-badge-rifi">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <div class="vertical-separator"></div>
+        
+        <!-- حاوية الكتابة المتحركة -->
+        <div class="text-container-rifi">
+            <div class="moving-text-rifi" id="rifiText">سرعة وضمان</div>
+        </div>
+    </div>
+
+    <!-- أيقونة التلاتة شرطات (Burger) -->
+    <div class="menu-icon-rifi" onclick="toggleSideMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+</div>
+
+<!-- القائمة الجانبية -->
+<div class="side-menu-rifi" id="sideMenu">
+    <!-- زر التبديل بين الوضع الليلي والنهاري -->
+    <div class="theme-switch-wrapper">
+        <span>الوضع الليلي / النهاري</span>
+        <div class="theme-icons">
+            <label class="switch">
+                <input type="checkbox" id="themeToggle" onclick="toggleTheme()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <!-- هنا يمكنك إضافة روابط القائمة العادية الأخرى -->
+    <div style="color:var(--text-color); margin-top:10px;">روابط أخرى...</div>
+</div>
+
+<!-- الخلفية المعتمة -->
+<div class="overlay-rifi" id="overlay" onclick="toggleSideMenu()"></div>
+
+<!-- الجافاسكريبت للتشغيل -->
+<script>
+    // 1. وظيفة فتح/إغلاق القائمة الجانبية
+    function toggleSideMenu() {
+        document.getElementById('sideMenu').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('open');
+    }
+
+    // 2. وظيفة تبديل الوضع الليلي والنهاري وحفظه في المتصفح
+    function toggleTheme() {
+        if (document.getElementById('themeToggle').checked) {
+            document.body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.body.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    // تحميل الوضع المحفوظ عند تحميل الصفحة
+    window.onload = function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.getElementById('themeToggle').checked = true;
+            document.body.classList.add('light-mode');
+        }
+    };
+
+    // 3. وظيفة تبديل الكتابة بين "سرعة وضمان" و "rifi shop" كل 4 ثواني
+    const textElement = document.getElementById('rifiText');
+    const texts = ["سرعة وضمان", "Rifi Shop"];
+    let index = 0;
+
+    setInterval(() => {
+        // تأثير الخروج (Fade out)
+        textElement.style.opacity = '0';
+        
+        // تبديل النص في المنتصف (بعد اختفاء النص القديم)
+        setTimeout(() => {
+            index = (index + 1) % texts.length;
+            textElement.textContent = texts[index];
+            // تأثير الدخول (Fade in)
+            textElement.style.opacity = '0.7'; 
+        }, 500); 
+
+    }, 4000); // الوقت الإجمالي بين التبديلات هو 4 ثواني
+</script>
+
+<!-- ============================================= -->
+<!-- نهاية كود الشريط العلوي المطور -->
+<!-- ============================================= -->
+
+</html>
